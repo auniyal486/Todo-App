@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}Update {% endblock title %} 
+{% block brand %}<a class="navbar-brand mb-0 h1 " href="/">ToDoList</a>{% endblock brand %}
+{% block navelement %}
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="text" id="Searching" placeholder="Search" aria-label="Search">
+            </form>
+            <div class="dropdown">
+                <button class="btn  dropdown-toggle dropdown-button" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{current_name}}
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="\logout">logout</a>
+                </div>
+            </div>
+        </ul>
+      </div>
+{% endblock navelement %}
+{% block body %}
+      <section id="datasub">
+        <form action="/update/{{todo.id}}" method="POST" style="display: inline-block;margin: 0 auto;width: 50%;" >
+          <div class="form-group row ">
+            <input type="text" class="form-control "  name="Task" readonly aria-describedby="TaskHelp" value="{{todo.task}}" >
+          </div>
+          <div class="form-group row ">
+            <textarea class="form-control " rows="5" name="Description">{{todo.description}}</textarea>
+          </div>
+          <button type="submit" class="btn btn-outline-primary">Submit</button>
+        </form> 
+      </section>  
+{% endblock body %}

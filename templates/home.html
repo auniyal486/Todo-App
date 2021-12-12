@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock title %} 
+{% block brand %}<a class="navbar-brand mb-0 h1 " href="/">ToDoList</a>{% endblock brand %}
+{% block navelement %}
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto">
+                        <form class="form-inline my-2 my-lg-0">
+                            <input class="form-control mr-sm-2" type="text" id="Searching" placeholder="Search" aria-label="Search">
+                        </form>
+                        <div class="dropdown">
+                            <button class="btn  dropdown-toggle dropdown-button" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {{current_name}}
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="\logout">logout</a>
+                            </div>
+                        </div>
+                    </ul>
+                </div>
+{% endblock navelement %}
+{% block body %}
+    <section id="datasub" >
+        <div id="flash_container">
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert" style="width: 53%;margin: auto;">  
+              {% for message in messages %}          
+                {{ message }}
+              {% endfor %}
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            {% endif %}
+            {% endwith %} 
+          </div>
+        <form action="/home" method="POST" style="display: inline-block;margin: 0 auto;width: 50%;">
+            <div class="form-group row">
+                <input type="text" class="form-control" id="task" name="Task"  placeholder="Enter Task" oninvalid="setCustomValidity('Enter Task Here')" oninput="setCustomValidity('')" required>
+            </div>
+            <div class="form-group row">
+                <textarea class="form-control" id="description" rows="5" name="Description" placeholder="Write Description" oninvalid="setCustomValidity('Enter Description Here')" oninput="setCustomValidity('')" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-outline-primary">Submit</button>
+        </form> 
+    </section> 
+    <div class="container my-3" style="width: 70%;margin: 2% auto;" >
+        <h2 id='todo_h'>Your Todos</h2>
+        {% if all_todo|length == 0 %}  
+          <div class="alert alert-dark" role="alert">
+          No Todos found. Add your first todo now!
+          </div>
+        {% else %} 
+        <div id="table-wrapper">
+          <div id="table-scroll">
+            <table class="table table_database table-striped table-bordered"  id="table_database">
+              <thead>
+                <tr>
+                  <th scope="col">serial no</th>
+                  <th scope="col">Task</th>
+                  <th scope="col">Description</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody id="myTable">
+                {% for item  in all_todo %}
+                <tr>
+                  <th scope="row">{{loop.index}}</th>
+                  <td id="task">{{item.task}}</td>
+                  <td>{{item.description}}</td>
+                  <td>
+                    <a href="\update\{{item.id}}"  type="button"  class="btn btn-outline-success btn-sm mr-1" >Update</a>
+                    <a href="\delete\{{item.id}}" type="button"  class="btn btn-outline-danger btn-sm mr-1" onclick="return confirm('Are You Sure For Delete?')">Delete</a>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            {% endif %}
+          </div>
+      </div>
+    </div>
+{% endblock body %}

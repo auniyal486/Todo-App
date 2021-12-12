@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block title %}TodoList{% endblock title %} 
+{% block brand %}<a class="navbar-brand mb-0 h1 mx-auto " href="/">ToDoList</a>{% endblock brand %}
+{% block body %}
+      <div class="container" style="position: absolute;width: 40vw;height: 75vh;margin: auto;top: 50%;left: 50%;transform: translate(-50%,-50%);">
+        <div id="flash_container">
+          {% with messages = get_flashed_messages() %}
+          {% if messages %}
+          <div class="alert alert-warning alert-dismissible fade show" role="alert">  
+            {% for message in messages %}          
+              {{ message }}
+            {% endfor %}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          {% endif %}
+          {% endwith %}
+        </div>
+        <div class="signup">Sign Up</div>
+        <div class="login">Log In</div>
+        
+        <div class="signup-form">
+          <form action="" method="post">
+            {{ reg_form.hidden_tag() }}
+            <div class="form-group row">
+              <div class="firstname_class">
+                {{ reg_form.first_name(class="input ",placeholder=reg_form.first_name.label.text) }}
+                <small id="firstname_check" class="form-text invalid-feedback" >
+                </small>
+              </div>
+              <div class="lastname_class">
+                {{ reg_form.last_name(class="input",placeholder=reg_form.last_name.label.text) }}
+              </div>
+            </div>
+            <div class="form-group row">
+                {{ reg_form.email(class="input",placeholder=reg_form.email.label.text) }}
+                <small id="emailcheck" class="form-text text-muted invalid-feedback">
+                </small>
+            </div>
+            <div class="form-group row">
+                {{ reg_form.password(class="input",placeholder=reg_form.password.label.text) }}
+                <small id="passcheck" class="form-text invalid-feedback" >
+                </small>
+            </div>
+            <div class="form-group row">
+                {{ reg_form.confirm_password(class="input",placeholder=reg_form.confirm_password.label.text) }}
+                <small id="conpasscheck" class="form-text invalid-feedback">
+                </small>
+            </div>
+            <div class=" form-group row form-check form-check-inline" style="margin-bottom:7px;">
+                {{ reg_form.remember(class="form-check-input" ) }}
+                {{ reg_form.remember.label(class="form-check-label" ) }}
+            </div>
+            {{ reg_form.submit(class="btn btn-outline-primary btn-lg button") }}
+          </form>
+        </div>
+        
+        <div class="login-form">
+          <form action="" method="post">
+            {{ login_form.hidden_tag() }}
+            <div class="form-group row">
+                {{ login_form.email(class=" input",placeholder=login_form.email.label.text) }}
+                <small id="log_emailcheck" class="form-text text-muted invalid-feedback">
+                </small>
+            </div>
+            <div class="form-group row">
+                {{ login_form.password(class=" input",placeholder=login_form.password.label.text) }}
+                <small id="log_passcheck" class="form-text invalid-feedback"  >
+                </small>
+            </div>
+            <div class=" form-group row form-check form-check-inline" style="margin-bottom:7px;">
+                {{ login_form.remember(class="form-check-input" ) }}
+                {{ login_form.remember.label(class="form-check-label" ) }}
+            </div>
+            {{ login_form.submit(class="btn btn-outline-primary btn-lg button") }}
+          </form>
+        </div>
+      </div>
+{% endblock body %}
+        
